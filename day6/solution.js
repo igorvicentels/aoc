@@ -5,31 +5,23 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
         console.error(err);
         return;
     }
+
     let arr = data.split('')
     
     // part 1
-    let result1
-    for (let i = 3; i < arr.length; i++) {
-        if (i > 2) {
-            let set = new Set ([...arr[i], arr[i-1], arr[i-2], arr[i-3]])
-            if (set.size == 4) {
-                result1 = i + 1
-                break;
-            } 
-        } 
-    }
+    let result1 = checkSeqN(4, arr)
     console.log(result1)
 
-    // part 2
-    let result2
-    for (let i = 13; i < arr.length; i++) {
-        if (i > 2) {
-            let set = new Set ([...arr.slice(i-13, i + 1)])
-            if (set.size == 14) {
-                result2 = i + 1
-                break;
-            } 
-        } 
-    }
+    // part 2              
+    let result2 = checkSeqN(14, arr)
     console.log(result2)
 });
+
+function checkSeqN (n, arr) {
+    for (let i = n - 1; i < arr.length; i++) {
+        let set = new Set ([...arr.slice(i - (n - 1), i + 1)])
+        if (set.size == n) {
+            return i + 1 
+        } 
+    }
+}
